@@ -1,12 +1,12 @@
 import React from 'react'
 import PropTypes from 'prop-types';
-import { Comtainer } from './style';
+import { Container } from './style';
 
 const Calendar = ({ dates }) => {
   return (
-    <Comtainer>
-      
-    </Comtainer>
+    <Container>
+      Calendar
+    </Container>
   )
 }
 

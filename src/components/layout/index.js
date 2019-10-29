@@ -8,15 +8,16 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import Navigation from '../navigation';
+import { Container, Main } from './style';
 
 const Layout = ({ children }) => {
   return (
-    <div>
+    <Main>
       <Navigation />
-      <div>
-        <main>{children}</main>
-      </div>
-    </div>
+      <Container>
+        {children}
+      </Container>
+    </Main>
   )
 }
 

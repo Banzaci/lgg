@@ -1,12 +1,12 @@
-import React, { Fragment } from 'react';
-import { Nav } from './style';
+import React from 'react';
+import { Nav, Container } from './style';
 
 const Navigation = () => (
-  <Fragment>
+  <Container>
     <Nav to="/">Home</Nav>
+    <Nav to="/booking/">Booking</Nav>
     <Nav to="/about/">About</Nav>
-    <Nav to="/bookings/">Bookings</Nav>
-  </Fragment>
+  </Container>
 )
 
 export default Navigation
