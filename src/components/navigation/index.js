@@ -5,7 +5,9 @@ const Navigation = () => (
   <Container>
     <Nav to="/">Home</Nav>
     <Nav to="/booking/">Booking</Nav>
-    <Nav to="/about/">About</Nav>
+    <Nav to="/food-drinks/">Food & drinks</Nav>
+    <Nav to="/surfing/">Surfing</Nav>
+    <Nav to="/contact/">Contact</Nav>
   </Container>
 )
 
