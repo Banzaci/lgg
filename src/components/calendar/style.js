@@ -3,6 +3,9 @@ import styled from 'styled-components';
 export const Container = styled.div`
   display: flex;
 `;
+export const Weekday = styled.div`
+  display: flex;
+`;
 
 export const Empty = styled.div`
   display: flex;

@@ -1,9 +1,9 @@
-import React from 'react'
-import { Container, Month, Day, Week, Empty } from './style';
+import React, { Fragment } from 'react'
+import { Container, Month, Day, Week, Empty, Weekday } from './style';
 import { daysInMonth, firstDay, getDayByDate, setYearAndMonth } from '../../utils/dates';
 
 function generateDatePicker() {
-  const { year, month, monthNumber, monthName, date } = setYearAndMonth(false, 11);
+  const { year, month, monthNumber, monthName, date } = setYearAndMonth();
   const { dayName } = getDayByDate(date);
   const dim = daysInMonth(year, month);
   const fd = firstDay(year, month);
@@ -37,10 +37,19 @@ function generateDatePicker() {
   );
 }
 
+function renderWeekDay() {
+  const x = Array.from({ length: 6 }, (_, i) => i);
+  return ( x.map((_, i) => {
+      return (<Weekday key={ i }>{ i }</Weekday>)
+    })
+  );
+}
+
 const Calendar = () => {
   return (
     <Container>
       <Month>
+        { renderWeekDay() }
         { generateDatePicker() }
       </Month>
     </Container>
