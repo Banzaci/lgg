@@ -51,21 +51,14 @@ export function getDate(year = THIS_YEAR, month = THIS_MONTH) {
     return [nextMonthYear, zeroPad(nextMonth, 2), zeroPad(day, 2)];
   });
 
+  return [ ...prevMonthDates, ...thisMonthDates, ...nextMonthDates ]
+}
+
+export const currenthMonthAndYear = (year = THIS_YEAR, month = THIS_MONTH) => {
   return {
-    monthDays,
-    monthFirstDay,
-    daysFromPrevMonth,
-    daysFromNextMonth,
-    prevMonth,
-    prevMonthYear,
-    nextMonth,
-    nextMonthYear,
-    prevMonthDays,
-    prevMonthDates,
-    thisMonthDates,
-    nextMonthDates,
-    calendar: [ ...prevMonthDates, ...thisMonthDates, ...nextMonthDates ]
-  }
+    currentMonth: month,
+    currentYear: year
+  };
 }
 
 export const zeroPad = (value, length) => {
@@ -103,10 +96,6 @@ export const getNextMonth = (month, year) => {
 
 export function firstDay(year, month) {
   return new Date(year, month).getDay()
-}
-
-export function daysInMonth(year, month) { 
-    return (32 - new Date(year, month, 32).getDate());
 }
 
 // https://medium.com/@nitinpatel_20236/challenge-of-building-a-calendar-with-pure-javascript-a86f1303267d
