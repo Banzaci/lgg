@@ -1,34 +1,37 @@
-import React, { Fragment } from 'react'
-import { Container, Month, Day, Week, Empty, Weekday } from './style';
-import { daysInMonth, firstDay, getDayByDate, setYearAndMonth } from '../../utils/dates';
+import React, { useState } from 'react'
+import { Container, Button, Month, Day, Week, Empty, Weekday, Weekdays, DatePicker, MonthName } from './style';
+import { dayNames, getNextMonth, daysInMonth, firstDay, getDate } from '../../utils/dates';
 
-function generateDatePicker() {
-  const { year, month, monthNumber, monthName, date } = setYearAndMonth();
-  const { dayName } = getDayByDate(date);
+const y = Array.from({ length: 6 }, (_, i) => i);
+const x = Array.from({ length: 7 }, (_, i) => i);
+
+function generateDatePicker({ year, month, day }) {
+  
   const dim = daysInMonth(year, month);
   const fd = firstDay(year, month);
+  
+  let iDay = 1;
 
-  console.log('firstDay', fd)
-  console.log('dayName', dayName)
-  console.log('monthNumber', monthNumber)
-  console.log('monthName', monthName)
-  console.log('month', month)
-  console.log('year', year)
-  console.log('daysInMonth', dim)
-
-  const x = Array.from({ length: 6 }, (_, i) => i);
-  const y = Array.from({ length: 7 }, (_, i) => i);
-  let day = 0;
-  return ( x.map((_, i) => {
+  return ( y.map((_, i) => {
     return (
       <Week key={ i }>
         { 
-          y.map((_, v) => {
-            if(i === 0 && v < fd) return <Empty key={ v }>E1</Empty>
-            else if(day > dim) return <Empty key={ v }>E2 { v }</Empty>
+          x.map((_, v) => {
+            if(i === 0 && v < (fd - 1)) return <Empty key={ v }></Empty>
+            else if(iDay > dim) {
+              return <Empty key={ v }></Empty>
+            }
             else {
-              day++;
-              return <Day key={ v } isActive={ (day - 1) === fd }>{ day }</Day>
+              const isActive = Number(iDay) === Number(day);
+              const cd = <Day
+                data-id={ iDay }
+                key={ v }
+                isActive={ isActive }
+              >
+                { iDay }
+              </Day>
+              iDay++;
+              return cd;
             }
           })
         }
@@ -38,20 +41,48 @@ function generateDatePicker() {
 }
 
 function renderWeekDay() {
-  const x = Array.from({ length: 6 }, (_, i) => i);
+  const x = Array.from({ length: 7 }, (_, i) => i);
   return ( x.map((_, i) => {
-      return (<Weekday key={ i }>{ i }</Weekday>)
+      return (<Weekday key={ i }>{ dayNames[i] }</Weekday>)
     })
   );
 }
 
-const Calendar = () => {
+const Calendar = ({ initialDate, onDateChange }) => {
+  const [ date, setDate ] = useState(initialDate);
+
+  console.log({
+    ...date
+  });
+
+  const onChange = (e) => {
+    const id = e.target.dataset.id;
+    onDateChange(id);
+  }
+
+  const onPrevMonth = () => {
+    console.log('onPrevMonth')
+  }
+
+  const onNextMonth = () => {
+    const n = getNextMonth(date);
+    setDate(getDate(n))
+    console.log('onNextMonth', n)
+  }
+  
   return (
     <Container>
       <Month>
-        { renderWeekDay() }
-        { generateDatePicker() }
+        <Button onClick={ () => onPrevMonth() }>Prev</Button>
+        <MonthName>{ date.monthName }</MonthName>
+        <Button onClick={ () => onNextMonth() }>Next</Button>
       </Month>
+      {/* <Weekdays>
+        { renderWeekDay() }
+      </Weekdays>
+      <DatePicker onClick={ (e) => onChange(e) }>
+        { generateDatePicker({ onDateChange, ...date }) }
+      </DatePicker> */}
     </Container>
   )
 }

@@ -2,14 +2,30 @@ import styled from 'styled-components';
 
 export const Container = styled.div`
   display: flex;
+  flex-direction: column;
 `;
-export const Weekday = styled.div`
+
+export const Weekdays = styled.div`
   display: flex;
+`;
+
+export const Button = styled.div`
+  display: flex;
+`;
+
+export const MonthName = styled.h3`
+  font-weight: bold;
+`;
+
+export const DatePicker = styled.div`
+  display: flex;
+  flex-direction: column;
 `;
 
 export const Empty = styled.div`
   display: flex;
-  background: grey;
+  background: #EEE;
+  color: #CCC;
   padding: 12px;
   margin: 1px;
   width: 20px;
@@ -18,8 +34,14 @@ export const Empty = styled.div`
   align-items: center;
 `;
 
+export const Weekday = styled(Empty)`
+  display: flex;
+  color: white;
+  background: #000;
+`;
+
 export const Day = styled(Empty)`
-  background: ${({ isActive }) => console.log('----------isActive', isActive) || isActive ? 'green' : 'blue'};
+  background: ${({ isActive }) => isActive ? '#333' : '#BBB'};
   color: white;
 `;
 
@@ -29,5 +51,5 @@ export const Week = styled.div`
 
 export const Month = styled.div`
   display: flex;
-  flex-direction: column;
+  justify-content: center;
 `;
