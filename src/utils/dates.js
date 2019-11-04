@@ -98,6 +98,55 @@ export function firstDay(year, month) {
   return new Date(year, month).getDay()
 }
 
+export const isDate = date => {
+  const isDate = Object.prototype.toString.call(date) === '[object Date]';
+  const isValidDate = date && !Number.isNaN(date.valueOf());
+  
+  return isDate && isValidDate;
+}
+
+export const isSameMonth = (date, basedate = new Date()) => {
+  
+  if (!(isDate(date) && isDate(basedate))) return false;
+
+  const basedateMonth = +(basedate.getMonth()) + 1;
+  const basedateYear = basedate.getFullYear();
+
+  const dateMonth = +(date.getMonth()) + 1;
+  const dateYear = date.getFullYear();
+
+  return (+basedateMonth === +dateMonth) && (+basedateYear === +dateYear);
+  
+}
+
+export const isSameDay = (date, basedate = new Date()) => {
+  
+  if (!(isDate(date) && isDate(basedate))) return false;
+
+  const basedateDate = basedate.getDate();
+  const basedateMonth = +(basedate.getMonth()) + 1;
+  const basedateYear = basedate.getFullYear();
+
+  const dateDate = date.getDate();
+  const dateMonth = +(date.getMonth()) + 1;
+  const dateYear = date.getFullYear();
+
+  return (+basedateDate === +dateDate) && (+basedateMonth === +dateMonth) && (+basedateYear === +dateYear);
+  
+}
+
+export const getDateISO = (date = new Date) => {
+  
+  if (!isDate(date)) return null;
+
+  return [
+    date.getFullYear(),
+    zeroPad(+date.getMonth() + 1, 2),
+    zeroPad(+date.getDate(), 2)
+  ].join('-');
+  
+}
+
 // https://medium.com/@nitinpatel_20236/challenge-of-building-a-calendar-with-pure-javascript-a86f1303267d
 
 // https://www.cssscript.com/create-simple-event-calendar-javascript-caleandar-js/

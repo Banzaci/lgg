@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Container, Button, Month, Day, Week, Empty, Weekday, Weekdays, DatePicker, MonthName } from './style';
-import { dayNames, getNextMonth, currenthMonthAndYear, firstDay, getDate } from '../../utils/dates';
+import { WEEK_DAYS, getNextMonth, currenthMonthAndYear, firstDay, getDate } from '../../utils/dates';
 
 const y = Array.from({ length: 6 }, (_, i) => i);
 const x = Array.from({ length: 7 }, (_, i) => i);
@@ -37,12 +37,8 @@ function generateDatePicker({ date }) {
   );
 }
 
-function renderWeekDay() {
-  const x = Array.from({ length: 7 }, (_, i) => i);
-  return ( x.map((_, i) => {
-      return (<Weekday key={ i }>{ dayNames[i] }</Weekday>)
-    })
-  );
+function renderWeekDay(dayName, index) {
+  return <Weekday key={ index }>{ dayName }</Weekday>
 }
 
 const Calendar = ({ initialDate, onDateChange }) => {
@@ -70,10 +66,9 @@ const Calendar = ({ initialDate, onDateChange }) => {
         {/* <MonthName>{ date.monthName }</MonthName> */}
         <Button onClick={ () => onNextMonth() }>Next</Button>
       </Month>
-      {/* <Weekdays>
-        { renderWeekDay() }
+        <Weekdays>
+        { Object.keys(WEEK_DAYS).map(renderWeekDay) }
       </Weekdays>
-       */}
        <DatePicker onClick={ (e) => onChange(e) }>
         { generateDatePicker({ date }) }
       </DatePicker>
