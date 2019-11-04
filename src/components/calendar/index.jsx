@@ -6,7 +6,6 @@ const y = Array.from({ length: 6 }, (_, i) => i);
 const x = Array.from({ length: 7 }, (_, i) => i);
 
 function generateDatePicker({ currentDate, dates }) {
-  
   const { currentDay, currentMonth } = currentDate;
   let k = 0;
 
@@ -15,7 +14,7 @@ function generateDatePicker({ currentDate, dates }) {
       <Week key={ i }>
         { 
           x.map((_, v) => {
-            const [ __, month, day ] = dates[k];
+            const [ year, month, day ] = dates[k];
             k++;
             if (Number(month) < currentMonth) {
               return <Empty key={ v }>{ day }</Empty>
@@ -23,9 +22,11 @@ function generateDatePicker({ currentDate, dates }) {
               return <Empty key={ v }>{ day }</Empty>
             } else {
               return (<Day
-                data-id={ day }
+                data-day={ day }
+                data-month={ month }
+                data-year={ year }
                 key={ v }
-                isActive={ currentDay === Number(day) }
+                isActive={ Number(currentDay) === Number(day) }
               >
                 { day }
               </Day>)
@@ -41,11 +42,17 @@ function renderWeekDay(dayName, index) {
   return <Weekday key={ index }>{ dayName }</Weekday>
 }
 
-const Calendar = ({ currentDate, initialDates, onDateChange }) => {
-  const [ dates, setDates ] = useState(initialDates);
+const Calendar = ({ currentDate, dates, onDateChange }) => {
+
   const onChange = (e) => {
-    const id = e.target.dataset.id;
-    onDateChange(id);
+    const currentDay = e.target.dataset.day;
+    const currentMonth = e.target.dataset.month;
+    const currentYear = e.target.dataset.year;
+    onDateChange({
+      currentDay,
+      currentMonth,
+      currentYear
+    });
   }
 
   const onPrevMonth = () => {

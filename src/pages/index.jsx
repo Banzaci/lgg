@@ -18,8 +18,8 @@ const IndexPage = () => {
       <SEO title="Home" />
       <Calendar
         currentDate={ currentDate }
-        initialDates={ getDates() }
-        onDateChange={ day => console.log(day) || setCurrentDate(day)}
+        dates={ getDates() }
+        onDateChange={ pickedDate => console.log(pickedDate) || setCurrentDate(pickedDate)}
       />
     </Layout>
   )
