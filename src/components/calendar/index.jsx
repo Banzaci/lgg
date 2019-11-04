@@ -43,11 +43,12 @@ function renderWeekDay(dayName, index) {
 }
 
 const Calendar = ({ currentDate, dates, onDateChange }) => {
-
   const onChange = (e) => {
+    
     const currentDay = e.target.dataset.day;
     const currentMonth = e.target.dataset.month;
     const currentYear = e.target.dataset.year;
+    
     onDateChange({
       currentDay,
       currentMonth,
@@ -80,6 +81,13 @@ const Calendar = ({ currentDate, dates, onDateChange }) => {
       </DatePicker>
     </Container>
   )
+}
+
+Rooms.propTypes = {
+  room: PropTypes.array.isRequired,
+  rooms: PropTypes.array.isRequired,
+  onRoomSelection: PropTypes.func.isRequired,
+  currentDate: PropTypes.object.isRequired,
 }
 
 export default Calendar
