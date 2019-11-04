@@ -1,34 +1,34 @@
 import React, { useState } from 'react'
 import { Container, Button, Month, Day, Week, Empty, Weekday, Weekdays, DatePicker, MonthName } from './style';
-import { WEEK_DAYS, getNextMonth, currenthMonthAndYear, firstDay, getDate } from '../../utils/dates';
+import { WEEK_DAYS, getNextMonth, currenthMonthAndYear, getDates } from '../../utils/dates';
 
 const y = Array.from({ length: 6 }, (_, i) => i);
 const x = Array.from({ length: 7 }, (_, i) => i);
 
-function generateDatePicker({ date }) {
-  const { currentMonth } = currenthMonthAndYear();
-  const isActive = false;
+function generateDatePicker({ currentDate, dates }) {
+  
+  const { currentDay, currentMonth } = currentDate;
   let k = 0;
+
   return ( y.map((_, i) => {
     return (
       <Week key={ i }>
         { 
           x.map((_, v) => {
-            const [ __, month, day ] = date[k];
+            const [ __, month, day ] = dates[k];
             k++;
             if (Number(month) < currentMonth) {
               return <Empty key={ v }>{ day }</Empty>
             } else if(Number(month) > currentMonth) {
               return <Empty key={ v }>{ day }</Empty>
             } else {
-                const cd = <Day
-                  data-id={ day }
-                  key={ v }
-                  isActive={ isActive }
-                >
-                  { day }
-                </Day>
-              return cd;
+              return (<Day
+                data-id={ day }
+                key={ v }
+                isActive={ currentDay === Number(day) }
+              >
+                { day }
+              </Day>)
             }
           })
         }
@@ -41,9 +41,8 @@ function renderWeekDay(dayName, index) {
   return <Weekday key={ index }>{ dayName }</Weekday>
 }
 
-const Calendar = ({ initialDate, onDateChange }) => {
-  const [ date, setDate ] = useState(initialDate);
-
+const Calendar = ({ currentDate, initialDates, onDateChange }) => {
+  const [ dates, setDates ] = useState(initialDates);
   const onChange = (e) => {
     const id = e.target.dataset.id;
     onDateChange(id);
@@ -54,8 +53,8 @@ const Calendar = ({ initialDate, onDateChange }) => {
   }
 
   const onNextMonth = () => {
-    const n = getNextMonth(date);
-    setDate(getDate(n))
+    // const n = getNextMonth(dates);
+    // setDates(getDates(n))
     // console.log('onNextMonth', n)
   }
   
@@ -69,8 +68,8 @@ const Calendar = ({ initialDate, onDateChange }) => {
         <Weekdays>
         { Object.keys(WEEK_DAYS).map(renderWeekDay) }
       </Weekdays>
-       <DatePicker onClick={ (e) => onChange(e) }>
-        { generateDatePicker({ date }) }
+      <DatePicker onClick={ (e) => onChange(e) }>
+        { generateDatePicker({ currentDate, dates }) }
       </DatePicker>
     </Container>
   )

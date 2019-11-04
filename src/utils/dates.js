@@ -27,7 +27,7 @@ export const CALENDAR_WEEKS = 6;
 export const THIS_MONTH = +(new Date().getMonth()) + 1;
 export const THIS_YEAR = +(new Date().getFullYear());
 
-export function getDate(year = THIS_YEAR, month = THIS_MONTH) {
+export function getDates(year = THIS_YEAR, month = THIS_MONTH) {
   const monthDays = getMonthDays(month, year);
   const monthFirstDay = getMonthFirstDay(month, year);
   const daysFromPrevMonth = monthFirstDay - 1;

@@ -1,20 +1,25 @@
 import React, { useState } from 'react';
 
-import { getDate } from '../utils/dates';
+import { getDates } from '../utils/dates';
 
 import Layout from '../components/layout';
 import SEO from '../components/seo';
 import Calendar from '../components/calendar';
 
 const IndexPage = () => {
-  const [ startDate, setStartDate ] = useState();
-  console.log(startDate)
+  const today = new Date();
+  const [ currentDate, setCurrentDate ] = useState({
+    currentDay: today.getDate(),
+    currentMonth: today.getMonth() + 1
+  });
+
   return (
     <Layout>
       <SEO title="Home" />
       <Calendar
-        initialDate={ getDate() }
-        onDateChange={ data => console.log(data) || setStartDate(data)}
+        currentDate={ currentDate }
+        initialDates={ getDates() }
+        onDateChange={ day => console.log(day) || setCurrentDate(day)}
       />
     </Layout>
   )
