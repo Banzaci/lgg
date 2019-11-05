@@ -3,18 +3,20 @@ import PropTypes from 'prop-types';
 import { Container } from './style';
 import Room from './room';
 
-const renderRoom = (room, onRoomSelection, index) => {
+const renderRoom = (room, onRoomHandler, selectedDate, index) => {
+  const isBooked = false;
   return (
     <Room
       key={ index }
       room={ room }
-      onRoomSelection={ onRoomSelection }
+      onRoomHandler={ onRoomHandler }
     />
   )
 }
 
-const RoomItems = ({ rooms, onRoomSelection }) => {
-  const roomItems = rooms.map( (room, index) => renderRoom(room, onRoomSelection, index))
+const RoomItems = ({ rooms, onRoomHandler, selectedDate }) => {
+  // if (tempDay.getTime() >= now.getTime() && tempDay.getTime() <= max.getTime()) {
+  const roomItems = rooms.map( (room, index) => renderRoom(room, onRoomHandler, selectedDate, index))
   return (
     <Container>
       { roomItems }
@@ -24,7 +26,8 @@ const RoomItems = ({ rooms, onRoomSelection }) => {
 
 RoomItems.propTypes = {
   rooms: PropTypes.array.isRequired,
-  onRoomSelection: PropTypes.func.isRequired,
+  selectedDate: PropTypes.object.isRequired,
+  onRoomHandler: PropTypes.func.isRequired,
 }
 
 export default RoomItems

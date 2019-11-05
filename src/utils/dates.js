@@ -1,17 +1,17 @@
-export const CALENDAR_MONTHS = {
-  January: 'Jan',
-  February: 'Feb',
-  March: 'Mar',
-  April: 'Apr',
-  May: 'May',
-  June: 'Jun',
-  July: 'Jul',
-  August: 'Aug',
-  September: 'Sep',
-  October: 'Oct',
-  November: 'Nov',
-  December: 'Dec'
-}
+export const CALENDAR_MONTHS = [
+  'Jan',
+  'Feb',
+  'Mar',
+  'Apr',
+  'May',
+  'Jun',
+  'Jul',
+  'Aug',
+  'Sep',
+  'Oct',
+  'Nov',
+  'Dec'
+]
 
 export const WEEK_DAYS = {
   Sunday: 'Sun',
@@ -24,16 +24,20 @@ export const WEEK_DAYS = {
 }
 
 export const CALENDAR_WEEKS = 6;
-export const THIS_MONTH = +(new Date().getMonth()) + 1;
-export const THIS_YEAR = +(new Date().getFullYear());
 
-export function getDates(year = THIS_YEAR, month = THIS_MONTH) {
+const TODAY = new Date();
+
+export const THIS_DAY = +(TODAY.getDate());
+export const THIS_MONTH = +(TODAY.getMonth()) + 1;
+export const THIS_YEAR = +(TODAY.getFullYear());
+
+export function getDates({ month, year }) {
   const monthDays = getMonthDays(month, year);
   const monthFirstDay = getMonthFirstDay(month, year);
   const daysFromPrevMonth = monthFirstDay - 1;
   const daysFromNextMonth = (CALENDAR_WEEKS * 7) - (daysFromPrevMonth + monthDays);
-  const { month: prevMonth, year: prevMonthYear } = getPreviousMonth(month, year);
-  const { month: nextMonth, year: nextMonthYear } = getNextMonth(month, year);
+  const { month: prevMonth, year: prevMonthYear } = getPreviousMonth({ month, year });
+  const { month: nextMonth, year: nextMonthYear } = getNextMonth({ month, year });
   const prevMonthDays = getMonthDays(prevMonth, prevMonthYear);
 
   const prevMonthDates = [...new Array(daysFromPrevMonth)].map((n, index) => {
@@ -54,22 +58,15 @@ export function getDates(year = THIS_YEAR, month = THIS_MONTH) {
   return [ ...prevMonthDates, ...thisMonthDates, ...nextMonthDates ]
 }
 
-export const currenthMonthAndYear = (year = THIS_YEAR, month = THIS_MONTH) => {
-  return {
-    currentMonth: month,
-    currentYear: year
-  };
-}
-
-export const zeroPad = (value, length) => {
+const zeroPad = (value, length) => {
   return `${value}`.padStart(length, '0');
 }
 
-export const getMonthFirstDay = (month = THIS_MONTH, year = THIS_YEAR) => {
+const getMonthFirstDay = (month, year) => {
   return +(new Date(`${year}-${zeroPad(month, 2)}-01`).getDay()) + 1;
 }
 
-export const getMonthDays = (month = THIS_MONTH, year = THIS_YEAR) => {
+const getMonthDays = (month, year) => {
   const months30 = [4, 6, 9, 11];
   const leapYear = year % 4 === 0;
 
@@ -82,20 +79,16 @@ export const getMonthDays = (month = THIS_MONTH, year = THIS_YEAR) => {
       : 31;
 }
 
-export const getPreviousMonth = ( month, year ) => {
+export const getPreviousMonth = ({ month, year }) => {
   const prevMonth = (month > 1) ? month - 1 : 12;
   const prevMonthYear = (month > 1) ? year : year - 1;
   return { month: prevMonth, year: prevMonthYear };
 }
 
-export const getNextMonth = (month, year) => {
+export const getNextMonth = ({ month, year }) => {
   const nextMonth = (month < 12) ? month + 1 : 1;
   const nextMonthYear = (month < 12) ? year : year + 1;
   return { month: nextMonth, year: nextMonthYear };
-}
-
-export function firstDay(year, month) {
-  return new Date(year, month).getDay()
 }
 
 export const isDate = date => {
@@ -145,6 +138,10 @@ export const getDateISO = (date = new Date) => {
     zeroPad(+date.getDate(), 2)
   ].join('-');
   
+}
+
+export const getMonthName = ({ month }) => {
+  return CALENDAR_MONTHS[month-1];
 }
 
 // https://medium.com/@nitinpatel_20236/challenge-of-building-a-calendar-with-pure-javascript-a86f1303267d

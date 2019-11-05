@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Room, Header, Paragraph } from './style';
 
-const RoomItem = ({ room, onRoomSelection }) => {
+const RoomItem = ({ room, onRoomHandler }) => {
   return (
     <Room>
       <Header>{ room.name }</Header>
@@ -14,7 +14,7 @@ const RoomItem = ({ room, onRoomSelection }) => {
 
 RoomItem.propTypes = {
   room: PropTypes.object.isRequired,
-  onRoomSelection: PropTypes.func.isRequired,
+  onRoomHandler: PropTypes.func.isRequired,
 }
 
 export default RoomItem

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import { getDates } from '../utils/dates';
+import { getDates, THIS_MONTH, THIS_YEAR, THIS_DAY } from '../utils/dates';
 
 import Layout from '../components/layout';
 import SEO from '../components/seo';
@@ -15,38 +15,54 @@ const rooms = [
     price: 80,
     booked: [
       {
-        checkin: '2019-12-01',
-        checkout: '2019-12-05',
+        checkin: {
+          day: 2,
+          month: 11,
+          year: 2019
+        },
+        checkout: {
+          day: 8,
+          month: 11,
+          year: 2019
+        },
       },
       {
-        checkin: '2019-12-08',
-        checkout: '2019-12-10',
+        checkin: {
+          day: 11,
+          month: 11,
+          year: 2019
+        },
+        checkout: {
+          day: 14,
+          month: 11,
+          year: 2019
+        },
       }
     ]
   }
 ]
 
 const IndexPage = () => {
-  const today = new Date();
-
-  const [ currentDate, setCurrentDate ] = useState({
-    currentDay: today.getDate(),
-    currentMonth: today.getMonth() + 1
+  const [ selectedDate, setSelectedDate ] = useState({
+    day: THIS_DAY,
+    month: THIS_MONTH,
+    year: THIS_YEAR,
   });
 
-  const [ room, setRoom ] = useState({})
-  console.log('room', room);
+  const [ booking, setBooking ] = useState({})
+  console.log('selectedDates', selectedDate);
   return (
     <Layout>
       <SEO title="Home" />
       <Calendar
-        currentDate={ currentDate }
-        dates={ getDates() }
-        onDateChange={ setCurrentDate }
+        selectedDate={ selectedDate }
+        dates={ getDates(selectedDate) }
+        onDateChange={ setSelectedDate }
       />
       <Rooms
+        selectedDate={ selectedDate }
         rooms={ rooms }
-        onRoomSelection={ setRoom }
+        onRoomHandler={ setBooking }
       />
     </Layout>
   )
