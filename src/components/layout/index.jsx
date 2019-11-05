@@ -5,18 +5,19 @@
  * See: https://www.gatsbyjs.org/docs/use-static-query/
  */
 
-import React from 'react'
-import PropTypes from 'prop-types'
+import React from 'react';
+import PropTypes from 'prop-types';
 import Navigation from '../navigation';
-import { Container, Main } from './style';
+import { Container, Main, GlobalStyle } from './style';
 
 const Layout = ({ children }) => {
   return (
     <Main>
       <Navigation />
       <Container>
-        {children}
+        { children }
       </Container>
+      <GlobalStyle />
     </Main>
   )
 }

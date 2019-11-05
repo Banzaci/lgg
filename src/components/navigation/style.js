@@ -8,8 +8,8 @@ export const Nav = styled(Link)`
 
 export const Container = styled.div`
   display: flex;
-  margin: 0 auto;
-  padding: 10px;
+  margin: 0;
+  padding: 0;
   width: 100%;
-  max-width: 800px;
+  background: #ccc;
 `;

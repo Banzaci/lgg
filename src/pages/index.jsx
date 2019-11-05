@@ -10,6 +10,7 @@ import Rooms from '../components/rooms';
 const rooms = [
   {
     name: 'Single room shared bathroom',
+    desc: 'Single room shared bathroom',
     noOfGuest: 1,
     price: 80,
     booked: [
@@ -33,8 +34,8 @@ const IndexPage = () => {
     currentMonth: today.getMonth() + 1
   });
 
-  const [ room, setRoom ] = useState()
-
+  const [ room, setRoom ] = useState({})
+  console.log('room', room);
   return (
     <Layout>
       <SEO title="Home" />
@@ -44,8 +45,6 @@ const IndexPage = () => {
         onDateChange={ setCurrentDate }
       />
       <Rooms
-        currentDate={ currentDate }
-        room={room}
         rooms={ rooms }
         onRoomSelection={ setRoom }
       />

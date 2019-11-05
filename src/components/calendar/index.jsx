@@ -1,4 +1,5 @@
-import React, { useState } from 'react'
+import React from 'react';
+import PropTypes from 'prop-types';
 import { Container, Button, Month, Day, Week, Empty, Weekday, Weekdays, DatePicker, MonthName } from './style';
 import { WEEK_DAYS, getNextMonth, currenthMonthAndYear, getDates } from '../../utils/dates';
 
@@ -83,11 +84,10 @@ const Calendar = ({ currentDate, dates, onDateChange }) => {
   )
 }
 
-Rooms.propTypes = {
-  room: PropTypes.array.isRequired,
-  rooms: PropTypes.array.isRequired,
-  onRoomSelection: PropTypes.func.isRequired,
+Calendar.propTypes = {
   currentDate: PropTypes.object.isRequired,
+  dates: PropTypes.array.isRequired,
+  onDateChange: PropTypes.func.isRequired,
 }
 
 export default Calendar
