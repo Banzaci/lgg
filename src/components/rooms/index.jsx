@@ -29,9 +29,9 @@ const renderRoom = (room, onRoomHandler, selectedStartDate, selectedEndDate, ind
 }
 
 
-const RoomItems = ({ rooms, onRoomHandler, startdDate, endDate }) => {
+const RoomItems = ({ rooms, onRoomHandler, startDate, endDate }) => {
   // if (tempDay.getTime() >= now.getTime() && tempDay.getTime() <= max.getTime()) {
-  const selectedStartDate = getDate(startdDate);
+  const selectedStartDate = getDate(startDate);
   const selectedEndDate = getDate(endDate);
   
   const roomItems = rooms.map( (room, index) => renderRoom(room, onRoomHandler, selectedStartDate, selectedEndDate, index))
@@ -44,7 +44,7 @@ const RoomItems = ({ rooms, onRoomHandler, startdDate, endDate }) => {
 
 RoomItems.propTypes = {
   rooms: PropTypes.array.isRequired,
-  startdDate: PropTypes.object.isRequired,
+  startDate: PropTypes.object.isRequired,
   endDate: PropTypes.object.isRequired,
   onRoomHandler: PropTypes.func.isRequired,
 }

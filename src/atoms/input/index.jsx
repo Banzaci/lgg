@@ -2,7 +2,7 @@ import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { Input, Label } from './style';
 
-const Input = ({ onFocus, onBlur, value, label, placeholder }) => {
+const InputField = ({ onFocus, onBlur, value, label, placeholder }) => {
   return (
     <Fragment>
       { label && <Label >{ label }</Label>}
@@ -16,10 +16,10 @@ const Input = ({ onFocus, onBlur, value, label, placeholder }) => {
   )
 }
 
-Input.propTypes = {
+InputField.propTypes = {
   value: PropTypes.string,
   onBlur: PropTypes.func,
   onFocus: PropTypes.func
 }
 
-export default Input
+export default InputField
