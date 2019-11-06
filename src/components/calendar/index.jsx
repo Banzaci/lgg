@@ -56,10 +56,7 @@ const Calendar = ({ selectedDate, dates, onDateChange }) => {
   }
   
   const onNextMonth = () => {
-    const a = getNextMonth(selectedDate)
-    console.log(selectedDate)
-    console.log(a)
-    onDateChange({ ...selectedDate, ...a})
+    onDateChange({ ...selectedDate, ...getNextMonth(selectedDate)})
   }
 
   return (

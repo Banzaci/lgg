@@ -43,24 +43,37 @@ const rooms = [
 ]
 
 const IndexPage = () => {
-  const [ selectedDate, setSelectedDate ] = useState({
+  
+  const [ startdDate, setStartDate ] = useState({
     day: THIS_DAY,
     month: THIS_MONTH,
     year: THIS_YEAR,
   });
 
+  const [ endDate, setEndDate ] = useState({
+    day: THIS_DAY + 1,
+    month: THIS_MONTH,
+    year: THIS_YEAR,
+  });
+
   const [ booking, setBooking ] = useState({})
-  console.log('selectedDates', selectedDate);
+
   return (
     <Layout>
       <SEO title="Home" />
       <Calendar
-        selectedDate={ selectedDate }
-        dates={ getDates(selectedDate) }
-        onDateChange={ setSelectedDate }
+        selectedDate={ startdDate }
+        dates={ getDates(startdDate) }
+        onDateChange={ setStartDate }
+      />
+      <Calendar
+        selectedDate={ endDate }
+        dates={ getDates(endDate) }
+        onDateChange={ setEndDate }
       />
       <Rooms
-        selectedDate={ selectedDate }
+        startdDate={ startdDate }
+        endDate={ endDate }
         rooms={ rooms }
         onRoomHandler={ setBooking }
       />
