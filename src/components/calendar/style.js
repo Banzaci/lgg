@@ -3,6 +3,7 @@ import styled from 'styled-components';
 export const Container = styled.div`
   display: flex;
   flex-direction: column;
+  box-shadow: ${({ isActive }) => isActive ? '1px 1px 1px rgba(0,0,0 .6)' : '0 rgba(0,0,0 0)'};
 `;
 
 export const Weekdays = styled.div`

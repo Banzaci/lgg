@@ -42,7 +42,7 @@ function renderWeekDay(dayName, index) {
   return <Weekday key={ index }>{ dayName }</Weekday>
 }
 
-const Calendar = ({ selectedDate, dates, onDateChange }) => {
+const Calendar = ({ selectedDate, dates, onDateChange, isActive }) => {
   const onChange = (e) => {
     const { day } = e.target.dataset
     onDateChange({
@@ -60,7 +60,7 @@ const Calendar = ({ selectedDate, dates, onDateChange }) => {
   }
 
   return (
-    <Container>
+    <Container isActive={ isActive }>
       <Month>
         <Button onClick={ () => onPrevMonth() }>Prev</Button>
         <MonthName>{ `${getMonthName(selectedDate)} ${selectedDate.year}` }</MonthName>

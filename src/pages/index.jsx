@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 
 import { getDates, THIS_MONTH, THIS_YEAR, THIS_DAY } from '../utils/dates';
+import { Wrapper, Row } from './style';
 
 import Layout from '../components/layout';
 import SEO from '../components/seo';
 import Calendar from '../components/calendar';
 import Rooms from '../components/rooms';
+import Input from '../atoms/input';
 
 const rooms = [
   {
@@ -42,35 +44,41 @@ const rooms = [
   }
 ]
 
+const initialDate = {
+  day: THIS_DAY,
+  month: THIS_MONTH,
+  year: THIS_YEAR,
+};
+
 const IndexPage = () => {
   
-  const [ startdDate, setStartDate ] = useState({
-    day: THIS_DAY,
-    month: THIS_MONTH,
-    year: THIS_YEAR,
-  });
+  const [ activeDP, setActiveDP ] = useState({ dp1: 0, dp2: 0 });
+  const [ startdDate, setStartDate ] = useState({ ...initialDate });
+  const [ endDate, setEndDate ] = useState({ ...initialDate, day: initialDate + 1 });
 
-  const [ endDate, setEndDate ] = useState({
-    day: THIS_DAY + 1,
-    month: THIS_MONTH,
-    year: THIS_YEAR,
-  });
-
-  const [ booking, setBooking ] = useState({})
+  const [ booking, setBooking ] = useState({});
 
   return (
     <Layout>
       <SEO title="Home" />
-      <Calendar
-        selectedDate={ startdDate }
-        dates={ getDates(startdDate) }
-        onDateChange={ setStartDate }
-      />
-      <Calendar
-        selectedDate={ endDate }
-        dates={ getDates(endDate) }
-        onDateChange={ setEndDate }
-      />
+      <Row>
+        <Input onFocus={ () => setActiveDP({ dp1: 1, dp2: 0 }) } />
+        <Input onFocus={ () => setActiveDP({ dp1: 0, dp2: 1 }) } />
+      </Row>
+      <Row>
+        <Calendar
+          isActive={ activeDP.dp1 }
+          selectedDate={ startdDate }
+          dates={ getDates(startdDate) }
+          onDateChange={ setStartDate }
+        />
+        <Calendar
+          isActive={ activeDP.dp2 }
+          selectedDate={ endDate }
+          dates={ getDates(endDate) }
+          onDateChange={ setEndDate }
+        />
+      </Row>
       <Rooms
         startdDate={ startdDate }
         endDate={ endDate }

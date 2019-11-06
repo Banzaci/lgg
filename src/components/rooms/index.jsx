@@ -20,6 +20,7 @@ const renderRoom = (room, onRoomHandler, selectedStartDate, selectedEndDate, ind
   console.log(isBooked)
   return (
     <Room
+      isBooked={ isBooked }
       key={ index }
       room={ room }
       onRoomHandler={ onRoomHandler }
