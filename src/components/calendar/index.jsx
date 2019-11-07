@@ -6,8 +6,30 @@ import { WEEK_DAYS, getNextMonth, getPreviousMonth, getMonthName } from '../../u
 const y = Array.from({ length: 6 }, (_, i) => i);
 const x = Array.from({ length: 7 }, (_, i) => i);
 
-function generateDatePicker({ selectedDate, dates }) {
-  const { day, month } = selectedDate;
+function isTodayHandler(year, month, day, today) {
+  return (
+    Number(today.day) === Number(day) &&
+    Number(today.month) === Number(month) &&
+    Number(today.year) === Number(year)
+  );
+}
+
+function isActiveHandler(year, month, day, today) {
+  return (
+    Number(today.day) > Number(day) &&
+    Number(today.month) === Number(month) &&
+    Number(today.year) === Number(year)
+  );
+}
+
+function generateDatePicker({ selectedMonth, todayDate, dates, fromDate }) {
+  const { day: currentDay, month: currentMonth, year: currentYear } = selectedMonth;
+  const { day: todayDay, month: todayMonth, year: todayYear } = todayDate;
+  const { day: fromDateDay, month: fromDateMonth, year: fromDateYear } = fromDate;
+  // console.log('todayDate', todayYear, todayMonth, todayDay);
+  console.log('selectedMonth', currentYear, currentMonth, currentDay);
+  console.log('fromDate', fromDateYear, fromDateMonth, fromDateDay);
+  // console.log('dates', dates[10])
   let k = 0;
   return ( y.map((_, i) => {
     return (
@@ -16,17 +38,23 @@ function generateDatePicker({ selectedDate, dates }) {
           x.map((_, v) => {
             const [ thisYear, thisMonth, thisDay ] = dates[k];
             k++;
-            if (Number(thisMonth) < month) {
+            if (Number(thisMonth) < currentMonth) {
               return <Empty key={ v }>{ thisDay }</Empty>
-            } else if(Number(thisMonth) > month) {
+            } else if(Number(thisMonth) > currentMonth) {
               return <Empty key={ v }>{ thisDay }</Empty>
             } else {
+              const isToday = isTodayHandler(thisYear, thisMonth, thisDay, todayDate);
+              const isActive = isActiveHandler(thisYear, thisMonth, thisDay, todayDate);
+              const isSelectedDay = isTodayHandler(thisYear, thisMonth, thisDay, fromDate);
+              // console.log(isSelectedDay, thisDay, currentDay)
               return (<Day
                 data-day={ thisDay }
                 data-month={ thisMonth }
                 data-year={ thisYear }
                 key={ v }
-                isActive={ Number(day) === Number(thisDay) }
+                isToday={ isToday }
+                isActive={ isActive }
+                isSelectedDay={ isSelectedDay }
               >
                 { thisDay }
               </Day>)
@@ -42,42 +70,46 @@ function renderWeekDay(dayName, index) {
   return <Weekday key={ index }>{ dayName }</Weekday>
 }
 
-const Calendar = ({ selectedDate, dates, onDateChange, isActive }) => {
+const Calendar = ({ selectedMonth, onMonthChange, todayDate, dates, onDateChange, isActive, fromDate }) => {
+  console.log(fromDate)
   const onChange = (e) => {
-    const { day } = e.target.dataset
-    onDateChange({
-      ...selectedDate,
-      day: Number(day)
-    });
+    const day = Number(e.target.dataset.day);
+    const month = Number(e.target.dataset.month);
+    const year = Number(e.target.dataset.year);
+    if (day && day >= todayDate.day) {
+      // console.log(day, month, year, fromDate)
+      onDateChange({
+        fromDate: {
+          day,
+          month,
+          year
+        },
+      });
+    }
   }
 
-  const onPrevMonth = () => {
-    onDateChange({ ...selectedDate, ...getPreviousMonth(selectedDate)})
-  }
-  
-  const onNextMonth = () => {
-    onDateChange({ ...selectedDate, ...getNextMonth(selectedDate)})
-  }
+  const onPrevMonth = () => onMonthChange({ ...selectedMonth, ...getPreviousMonth(selectedMonth)})
+  const onNextMonth = () => onMonthChange({ ...selectedMonth, ...getNextMonth(selectedMonth)})
 
   return (
     <Container isActive={ isActive }>
       <Month>
         <Button onClick={ () => onPrevMonth() }>Prev</Button>
-        <MonthName>{ `${getMonthName(selectedDate)} ${selectedDate.year}` }</MonthName>
+        <MonthName>{ `${getMonthName(selectedMonth)} ${selectedMonth.year}` }</MonthName>
         <Button onClick={ () => onNextMonth() }>Next</Button>
       </Month>
         <Weekdays>
         { Object.keys(WEEK_DAYS).map(renderWeekDay) }
       </Weekdays>
       <DatePicker onClick={ (e) => onChange(e) }>
-        { generateDatePicker({ selectedDate, dates }) }
+        { generateDatePicker({ selectedMonth, todayDate, dates, fromDate }) }
       </DatePicker>
     </Container>
   )
 }
 
 Calendar.propTypes = {
-  selectedDate: PropTypes.object.isRequired,
+  todayDate: PropTypes.object.isRequired,
   dates: PropTypes.array.isRequired,
   onDateChange: PropTypes.func.isRequired,
 }

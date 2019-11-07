@@ -14,13 +14,13 @@ export const CALENDAR_MONTHS = [
 ]
 
 export const WEEK_DAYS = {
-  Sunday: 'Sun',
-  Monday: 'Mon',
-  Tuesday: 'Tue',
-  Wednesday: 'Wed',
-  Thursday: 'Thu',
-  Friday: 'Fri',
-  Saturday: 'Sat'
+  Sun: 'Sun',
+  Mon: 'Mon',
+  Tues: 'Tue',
+  Wednes: 'Wed',
+  Thurs: 'Thu',
+  Fri: 'Fri',
+  Satur: 'Sat'
 }
 
 export const CALENDAR_WEEKS = 6;

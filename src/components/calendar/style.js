@@ -1,5 +1,12 @@
 import styled from 'styled-components';
 
+function setBackground(prop) {
+  if(prop.isToday) return 'green';
+  if(prop.isActive) return 'pink';
+  if(prop.isSelectedDay) return 'brown';
+  return 'black';
+}
+
 export const Container = styled.div`
   display: flex;
   flex-direction: column;
@@ -42,7 +49,7 @@ export const Weekday = styled(Empty)`
 `;
 
 export const Day = styled(Empty)`
-  background: ${({ isActive }) => isActive ? '#333' : '#BBB'};
+  background: ${setBackground};
   color: white;
 `;
 
@@ -54,3 +61,4 @@ export const Month = styled.div`
   display: flex;
   justify-content: center;
 `;
+

@@ -44,7 +44,7 @@ const rooms = [
   }
 ]
 
-const initDate = {
+const todayDate = {
   day: THIS_DAY,
   month: THIS_MONTH,
   year: THIS_YEAR
@@ -53,26 +53,41 @@ const initDate = {
 const initialState = {
   dp1: 0,
   dp2: 0,
-  startDate: {
-    ...initDate
-  },
-  endDate: {
-    ...initDate,
-    day: THIS_DAY + 1
-  }
+  todayDate,
+  selectedMonth: todayDate,
+  fromDate: {},
 };
 
-function reducer(state, action) {
-  switch (action.type) {
-    case 'startDate':
+function dateChecker(startDate, endDate) {
+  if(startDate.day >= endDate.day && startDate.month >= endDate.month && startDate.year >= endDate.year) {
+    return {
+      endDate: {
+        ...startDate,
+        day: startDate.day + 1,
+      },
+      startDate
+    }
+  }
+  return {
+    startDate
+  };
+}
+
+function reducer(state, { type, payload }) {
+  switch (type) {
+    case 'onDateChange':
+        console.log('onDateChange', payload)
       return {
         ...state,
-        startDate: action.payload
+        fromDate: payload.fromDate,
+        // ...dateChecker(payload, state.toDate)
       }
-    case 'endDate':
+    case 'onMonthChange':
+      console.log('onMonthChange', payload)
       return {
         ...state,
-        endDate: action.payload
+        selectedMonth: payload
+        // ...dateChecker(payload, state.toDate)
       }
     case 'dp1':
       return {
@@ -93,34 +108,25 @@ function reducer(state, action) {
 
 const IndexPage = () => {
   const [ state, dispatch ] = useReducer(reducer, initialState);
-  console.log(state.startDate)
-  console.log(state.endDate)
+  console.log(state)
   return (
     <Layout>
       <SEO title="Home" />
       <Row>
-        <Input onFocus={ () => dispatch({ type: 'dp1' }) } />
-        <Input onFocus={ () => dispatch({ type: 'dp2' }) } />
-      </Row>
-      <Row>
         <Calendar
-          selectedDate={ state.startDate }
-          dates={ getDates(state.startDate) }
-          onDateChange={ payload => dispatch({ type: 'startDate', payload }) }
-        />
-        <Calendar
-          selectedDate={ state.endDate }
-          dates={ getDates(state.endDate) }
-          onDateChange={ payload => dispatch({ type: 'endDate', payload }) }
+          todayDate={ todayDate }
+          dates={ getDates(state.selectedMonth) }
+          selectedMonth={ state.selectedMonth }
+          onDateChange={ payload => dispatch({ type: 'onDateChange', payload }) }
+          onMonthChange={ payload => dispatch({ type: 'onMonthChange', payload }) }
+          fromDate={ state.fromDate }
         />
       </Row>
       <Row>
-        <Rooms
-          startDate={ state.startDate }
-          endDate={ state.endDate }
+        {/* <Rooms
           rooms={ rooms }
           onRoomHandler={ () => {} }
-        />
+        /> */}
       </Row>
     </Layout>
   )

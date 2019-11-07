@@ -17,7 +17,6 @@ const renderRoom = (room, onRoomHandler, selectedStartDate, selectedEndDate, ind
     }
     return acc;
   }, []);
-  console.log(isBooked)
   return (
     <Room
       isBooked={ isBooked }
