@@ -55,7 +55,8 @@ const initialState = {
   dp2: 0,
   todayDate,
   selectedMonth: todayDate,
-  fromDate: {},
+  fromDate: false,
+  toDate: false,
 };
 
 function dateChecker(startDate, endDate) {
@@ -76,18 +77,15 @@ function dateChecker(startDate, endDate) {
 function reducer(state, { type, payload }) {
   switch (type) {
     case 'onDateChange':
-        console.log('onDateChange', payload)
       return {
         ...state,
         fromDate: payload.fromDate,
-        // ...dateChecker(payload, state.toDate)
+        toDate: payload.toDate,
       }
     case 'onMonthChange':
-      console.log('onMonthChange', payload)
       return {
         ...state,
         selectedMonth: payload
-        // ...dateChecker(payload, state.toDate)
       }
     case 'dp1':
       return {
@@ -108,7 +106,6 @@ function reducer(state, { type, payload }) {
 
 const IndexPage = () => {
   const [ state, dispatch ] = useReducer(reducer, initialState);
-  console.log(state)
   return (
     <Layout>
       <SEO title="Home" />
@@ -120,6 +117,7 @@ const IndexPage = () => {
           onDateChange={ payload => dispatch({ type: 'onDateChange', payload }) }
           onMonthChange={ payload => dispatch({ type: 'onMonthChange', payload }) }
           fromDate={ state.fromDate }
+          toDate={ state.toDate }
         />
       </Row>
       <Row>

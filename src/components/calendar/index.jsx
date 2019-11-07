@@ -6,6 +6,12 @@ import { WEEK_DAYS, getNextMonth, getPreviousMonth, getMonthName } from '../../u
 const y = Array.from({ length: 6 }, (_, i) => i);
 const x = Array.from({ length: 7 }, (_, i) => i);
 
+const getTime = (date) => {
+  if (!date) return false;
+  const { day, month, year } = date;
+  return new Date(year, month, day).getTime();
+}
+
 function isTodayHandler(year, month, day, today) {
   return (
     Number(today.day) === Number(day) &&
@@ -22,13 +28,14 @@ function isActiveHandler(year, month, day, today) {
   );
 }
 
-function generateDatePicker({ selectedMonth, todayDate, dates, fromDate }) {
+function generateDatePicker({ selectedMonth, todayDate, dates, fromDate, toDate }) {
   const { day: currentDay, month: currentMonth, year: currentYear } = selectedMonth;
   const { day: todayDay, month: todayMonth, year: todayYear } = todayDate;
   const { day: fromDateDay, month: fromDateMonth, year: fromDateYear } = fromDate;
+  const { day: toDateDay, month: toDateMonth, year: toDateYear } = toDate;
   // console.log('todayDate', todayYear, todayMonth, todayDay);
-  console.log('selectedMonth', currentYear, currentMonth, currentDay);
-  console.log('fromDate', fromDateYear, fromDateMonth, fromDateDay);
+  // console.log('selectedMonth', currentYear, currentMonth, currentDay);
+  // console.log('fromDate', fromDateYear, fromDateMonth, fromDateDay);
   // console.log('dates', dates[10])
   let k = 0;
   return ( y.map((_, i) => {
@@ -45,8 +52,8 @@ function generateDatePicker({ selectedMonth, todayDate, dates, fromDate }) {
             } else {
               const isToday = isTodayHandler(thisYear, thisMonth, thisDay, todayDate);
               const isActive = isActiveHandler(thisYear, thisMonth, thisDay, todayDate);
-              const isSelectedDay = isTodayHandler(thisYear, thisMonth, thisDay, fromDate);
-              // console.log(isSelectedDay, thisDay, currentDay)
+              const isFromDay = isTodayHandler(thisYear, thisMonth, thisDay, fromDate);
+              // console.log(isFromDay, thisDay, currentDay)
               return (<Day
                 data-day={ thisDay }
                 data-month={ thisMonth }
@@ -54,7 +61,8 @@ function generateDatePicker({ selectedMonth, todayDate, dates, fromDate }) {
                 key={ v }
                 isToday={ isToday }
                 isActive={ isActive }
-                isSelectedDay={ isSelectedDay }
+                isFromDay={ isFromDay }
+                isFromDay={ isFromDay }
               >
                 { thisDay }
               </Day>)
@@ -70,21 +78,37 @@ function renderWeekDay(dayName, index) {
   return <Weekday key={ index }>{ dayName }</Weekday>
 }
 
-const Calendar = ({ selectedMonth, onMonthChange, todayDate, dates, onDateChange, isActive, fromDate }) => {
-  console.log(fromDate)
+function setFromAndToDate(fromDate, toDate, { day, month, year }) {
+  const fd = getTime(fromDate);
+  const td = getTime(toDate);
+  console.log(fd, td)
+  return fromDate ? {
+    fromDate,
+    toDate: {
+      day,
+      month,
+      year
+    }} : {
+      toDate,
+      fromDate: {
+        day,
+        month,
+        year
+      },
+    }
+}
+
+const Calendar = ({ selectedMonth, onMonthChange, todayDate, dates, onDateChange, isActive, fromDate, toDate }) => {
+  console.log('fromDate-----', fromDate);
+  console.log('toDate-----', toDate);
   const onChange = (e) => {
     const day = Number(e.target.dataset.day);
     const month = Number(e.target.dataset.month);
     const year = Number(e.target.dataset.year);
     if (day && day >= todayDate.day) {
-      // console.log(day, month, year, fromDate)
-      onDateChange({
-        fromDate: {
-          day,
-          month,
-          year
-        },
-      });
+      const range = setFromAndToDate(fromDate, toDate, { day, month, year });
+      console.log('range: ------', range);
+      onDateChange({ ...range });
     }
   }
 

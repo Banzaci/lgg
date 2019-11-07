@@ -3,7 +3,8 @@ import styled from 'styled-components';
 function setBackground(prop) {
   if(prop.isToday) return 'green';
   if(prop.isActive) return 'pink';
-  if(prop.isSelectedDay) return 'brown';
+  if(prop.isFromDay) return 'brown';
+  if(prop.isToDay) return 'brown';
   return 'black';
 }
 
