@@ -31,12 +31,6 @@ function isActiveHandler(year, month, day, today) {
 function generateDatePicker({ selectedMonth, todayDate, dates, fromDate, toDate }) {
   const { day: currentDay, month: currentMonth, year: currentYear } = selectedMonth;
   const { day: todayDay, month: todayMonth, year: todayYear } = todayDate;
-  const { day: fromDateDay, month: fromDateMonth, year: fromDateYear } = fromDate;
-  const { day: toDateDay, month: toDateMonth, year: toDateYear } = toDate;
-  // console.log('todayDate', todayYear, todayMonth, todayDay);
-  // console.log('selectedMonth', currentYear, currentMonth, currentDay);
-  // console.log('fromDate', fromDateYear, fromDateMonth, fromDateDay);
-  // console.log('dates', dates[10])
   let k = 0;
   return ( y.map((_, i) => {
     return (
@@ -53,6 +47,7 @@ function generateDatePicker({ selectedMonth, todayDate, dates, fromDate, toDate 
               const isToday = isTodayHandler(thisYear, thisMonth, thisDay, todayDate);
               const isActive = isActiveHandler(thisYear, thisMonth, thisDay, todayDate);
               const isFromDay = isTodayHandler(thisYear, thisMonth, thisDay, fromDate);
+              const isToDay = isTodayHandler(thisYear, thisMonth, thisDay, toDate);
               // console.log(isFromDay, thisDay, currentDay)
               return (<Day
                 data-day={ thisDay }
@@ -62,7 +57,7 @@ function generateDatePicker({ selectedMonth, todayDate, dates, fromDate, toDate 
                 isToday={ isToday }
                 isActive={ isActive }
                 isFromDay={ isFromDay }
-                isFromDay={ isFromDay }
+                isToDay={ isToDay }
               >
                 { thisDay }
               </Day>)
@@ -126,7 +121,7 @@ const Calendar = ({ selectedMonth, onMonthChange, todayDate, dates, onDateChange
         { Object.keys(WEEK_DAYS).map(renderWeekDay) }
       </Weekdays>
       <DatePicker onClick={ (e) => onChange(e) }>
-        { generateDatePicker({ selectedMonth, todayDate, dates, fromDate }) }
+        { generateDatePicker({ selectedMonth, todayDate, dates, fromDate, toDate }) }
       </DatePicker>
     </Container>
   )
