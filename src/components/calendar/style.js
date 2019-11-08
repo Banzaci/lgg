@@ -3,9 +3,9 @@ import styled from 'styled-components';
 function setBackground(prop) {
   if(prop.isToday) return 'green';
   if(prop.isActive) return 'pink';
-  if(prop.isFromDay) return 'brown';
-  if(prop.isToDay) return 'brown';
-  return 'black';
+  if(prop.isFromDay || prop.isToDay) return 'brown';
+  if(prop.isSelected) return 'blue';
+  return '#333';
 }
 
 export const Container = styled.div`
