@@ -121,10 +121,10 @@ const IndexPage = () => {
         />
       </Row>
       <Row>
-        {/* <Rooms
+        <Rooms
           rooms={ rooms }
           onRoomHandler={ () => {} }
-        /> */}
+        />
       </Row>
     </Layout>
   )

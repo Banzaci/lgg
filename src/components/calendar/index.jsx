@@ -79,6 +79,12 @@ function renderWeekDay(dayName, index) {
 }
 
 function setFromAndToDate(fromDate, toDate, { day, month, year }) {
+  if(fromDate && toDate) {
+    return {
+      toDate: false,
+      fromDate: { day, month, year }
+    }
+  }
   return fromDate ? {
     fromDate,
     toDate: {
