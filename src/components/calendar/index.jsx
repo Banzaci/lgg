@@ -31,8 +31,8 @@ function isActiveHandler(year, month, day, today) {
 function generateDatePicker({ selectedMonth, todayDate, dates, fromDate, toDate }) {
   const { month: currentMonth } = selectedMonth;
 
-  const fromDateTime = getTime(fromDate)
-  const toDateTime = getTime(toDate)
+  const fromDateTime = getTime(fromDate);
+  const toDateTime = getTime(toDate);
 
   let k = 0;
   return ( y.map((_, i) => {

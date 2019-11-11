@@ -54,25 +54,10 @@ const initialState = {
   dp1: 0,
   dp2: 0,
   todayDate,
-  selectedMonth: todayDate,
-  fromDate: false,
-  toDate: false,
+  selectedMonth: { ...todayDate },
+  fromDate: { ...todayDate },
+  toDate: { ...todayDate, day: todayDate.day + 1 },
 };
-
-function dateChecker(startDate, endDate) {
-  if(startDate.day >= endDate.day && startDate.month >= endDate.month && startDate.year >= endDate.year) {
-    return {
-      endDate: {
-        ...startDate,
-        day: startDate.day + 1,
-      },
-      startDate
-    }
-  }
-  return {
-    startDate
-  };
-}
 
 function reducer(state, { type, payload }) {
   switch (type) {
@@ -86,18 +71,6 @@ function reducer(state, { type, payload }) {
       return {
         ...state,
         selectedMonth: payload
-      }
-    case 'dp1':
-      return {
-        ...state,
-        dp1: 1,
-        dp2: 0
-      }
-    case 'dp1':
-      return {
-        ...state,
-        dp1: 0,
-        dp2: 1
       }
     default:
       throw new Error();
@@ -122,6 +95,8 @@ const IndexPage = () => {
       </Row>
       <Row>
         <Rooms
+          fromDate={ state.fromDate }
+          toDate={ state.toDate }
           rooms={ rooms }
           onRoomHandler={ () => {} }
         />

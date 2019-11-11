@@ -3,20 +3,18 @@ import PropTypes from 'prop-types';
 import { Container } from './style';
 import Room from './room';
 
-const getDate = ({ day, month, year }) => {
+const getTime = ({ day, month, year }) => {
   return new Date(year, month, day).getTime();
 }
 
-const renderRoom = (room, onRoomHandler, selectedStartDate, selectedEndDate, index) => {
+const renderRoom = (room, onRoomHandler, fromDate, toDate, index) => {
   const isBooked = room.booked.reduce( (acc, current) => {
     const { checkin, checkout } = current;
-    if (getDate(checkin) >= selectedStartDate && getDate(checkout) <= selectedEndDate) {
-      acc = [...acc, false];
-    } else {
-      acc = [...acc, true];
-    }
+    const booked = getTime(checkin) >= fromDate && toDate <= getTime(checkout);
+    acc = [...acc, booked];
     return acc;
   }, []);
+  console.log(isBooked)
   return (
     <Room
       isBooked={ isBooked }
@@ -27,13 +25,10 @@ const renderRoom = (room, onRoomHandler, selectedStartDate, selectedEndDate, ind
   )
 }
 
-
-const RoomItems = ({ rooms, onRoomHandler, startDate, endDate }) => {
-  // if (tempDay.getTime() >= now.getTime() && tempDay.getTime() <= max.getTime()) {
-  const selectedStartDate = getDate(startDate);
-  const selectedEndDate = getDate(endDate);
-  
-  const roomItems = rooms.map( (room, index) => renderRoom(room, onRoomHandler, selectedStartDate, selectedEndDate, index))
+const RoomItems = ({ rooms, onRoomHandler, fromDate, toDate }) => {
+  const roomItems = rooms.map( (room, index) => 
+    renderRoom(room, onRoomHandler, getTime(fromDate), getTime(toDate), index)
+  );
   return (
     <Container>
       { roomItems }
@@ -43,8 +38,8 @@ const RoomItems = ({ rooms, onRoomHandler, startDate, endDate }) => {
 
 RoomItems.propTypes = {
   rooms: PropTypes.array.isRequired,
-  startDate: PropTypes.object.isRequired,
-  endDate: PropTypes.object.isRequired,
+  fromDate: PropTypes.any.isRequired,
+  toDate: PropTypes.any.isRequired,
   onRoomHandler: PropTypes.func.isRequired,
 }
 
