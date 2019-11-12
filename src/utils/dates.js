@@ -136,10 +136,9 @@ export const getDateISO = ({ year, month, day }) => {
   
 }
 
-export const daysBetween = (from, to) => {
+export const daysBetween = ({ fromDate, toDate }) => {
   const ONE_DAY = 1000 * 60 * 60 * 24;
-  console.log(from, to)
-  const differenceMs = Math.abs(getTime(from) - getTime(to));
+  const differenceMs = Math.abs(getTime(fromDate) - getTime(toDate));
   return Math.round(differenceMs / ONE_DAY);
 }
 

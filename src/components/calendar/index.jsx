@@ -8,27 +8,18 @@ function renderWeekDay(dayName, index) {
   return <Weekday key={ index }>{ dayName }</Weekday>
 }
 
-function setFromAndToDate(fromDate, toDate, { day, month, year }) {
+function setFromAndToDate(fromDate, toDate, selectedDate) {
   if(fromDate && toDate) {
     return {
+      fromDate: { ...selectedDate },
       toDate: false,
-      fromDate: { day, month, year }
     }
   }
-  return fromDate ? {
-    fromDate,
-    toDate: {
-      day,
-      month,
-      year
-    }} : {
-      toDate,
-      fromDate: {
-        day,
-        month,
-        year
-      },
-    }
+
+  return {
+    ...(fromDate && { fromDate, toDate: { ...selectedDate } }),
+    ...(!fromDate && { fromDate: { ...selectedDate }, toDate })
+  }
 }
 
 const Calendar = ({ selectedRoom, selectedMonth, onMonthChange, todayDate, dates, onDateChange, isActive, fromDate, toDate }) => {
@@ -39,9 +30,8 @@ const Calendar = ({ selectedRoom, selectedMonth, onMonthChange, todayDate, dates
     const isBooked = JSON.parse(e.target.dataset.booked);
     if (!isBooked && (day >= todayDate.day) && (month >= todayDate.month)) {
       const range = setFromAndToDate(fromDate, toDate, { day, month, year });
-      const days = daysBetween(range.fromDate, range.toDate);
-      console.log(range.fromDate, range.toDate, days)
-      onDateChange({ ...range });
+      const days = daysBetween(range);
+      onDateChange({ ...range, days });
     }
   }
 
