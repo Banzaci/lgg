@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 
 function setBackground(prop) {
+  if(prop.isBooked) return 'yellow';
   if(prop.isToday) return 'green';
   if(prop.isActive) return 'pink';
   if(prop.isFromDay || prop.isToDay) return 'brown';

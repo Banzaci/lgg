@@ -1,5 +1,10 @@
 import styled from 'styled-components';
 
+function setBackground(prop) {
+  if(prop.isBooked) return 'yellow';
+  return '#333';
+}
+
 export const Container = styled.div`
   display: flex;
   flex-direction: column;
@@ -8,7 +13,7 @@ export const Container = styled.div`
 export const Room = styled.div`
   display: flex;
   width: 100%;
-  background: #EEE;
+  background: ${setBackground};
 `;
 
 export const Header = styled.h1``;

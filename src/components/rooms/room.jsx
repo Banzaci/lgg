@@ -2,9 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Room, Header, Paragraph } from './style';
 
-const RoomItem = ({ room, onRoomHandler }) => {
+const RoomItem = ({ room, onRoomHandler, isBooked }) => {
   return (
-    <Room>
+    <Room isBooked={ isBooked }>
       <Header>{ room.name }</Header>
       <Paragraph>{ room.desc }</Paragraph>
       <Paragraph>{ room.price }</Paragraph>

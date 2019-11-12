@@ -28,12 +28,11 @@ function isActiveHandler(year, month, day, today) {
   );
 }
 
-function generateDatePicker({ selectedMonth, todayDate, dates, fromDate, toDate }) {
+function generateDatePicker({ selectedRoom, selectedMonth, todayDate, dates, fromDate, toDate }) {
   const { month: currentMonth } = selectedMonth;
 
   const fromDateTime = getTime(fromDate);
   const toDateTime = getTime(toDate);
-
   let k = 0;
   return ( y.map((_, i) => {
     return (
@@ -53,16 +52,24 @@ function generateDatePicker({ selectedMonth, todayDate, dates, fromDate, toDate 
               const isToDay = isDayHandler(thisYear, thisMonth, thisDay, toDate);
               const dayTime = getTime({ year:thisYear, month:thisMonth, day:thisDay});
               const isSelected = dayTime > fromDateTime && dayTime < toDateTime;
+              let isBooked = false;
+              selectedRoom.booked.forEach(({ checkin, checkout }) => {
+                if(!isBooked) {
+                  isBooked = dayTime > getTime(checkin) && dayTime <= getTime(checkout);
+                }
+              });
               return (<Day
                 data-day={ thisDay }
                 data-month={ thisMonth }
                 data-year={ thisYear }
+                data-booked={ isBooked }
                 key={ v }
                 isToday={ isToday }
                 isActive={ isActive }
                 isFromDay={ isFromDay }
                 isToDay={ isToDay }
                 isSelected={ isSelected }
+                isBooked={ isBooked }
               >
                 { thisDay }
               </Day>)
@@ -101,12 +108,13 @@ function setFromAndToDate(fromDate, toDate, { day, month, year }) {
     }
 }
 
-const Calendar = ({ selectedMonth, onMonthChange, todayDate, dates, onDateChange, isActive, fromDate, toDate }) => {
+const Calendar = ({ selectedRoom, selectedMonth, onMonthChange, todayDate, dates, onDateChange, isActive, fromDate, toDate }) => {
   const onChange = (e) => {
     const day = Number(e.target.dataset.day);
     const month = Number(e.target.dataset.month);
     const year = Number(e.target.dataset.year);
-    if (day && day >= todayDate.day || todayDate.month < month) {//
+    const isBooked = JSON.parse(e.target.dataset.booked);
+    if (!isBooked && (day >= todayDate.day) && (month >= todayDate.month)) {
       const range = setFromAndToDate(fromDate, toDate, { day, month, year });
       onDateChange({ ...range });
     }
@@ -126,7 +134,7 @@ const Calendar = ({ selectedMonth, onMonthChange, todayDate, dates, onDateChange
         { Object.keys(WEEK_DAYS).map(renderWeekDay) }
       </Weekdays>
       <DatePicker onClick={ (e) => onChange(e) }>
-        { generateDatePicker({ selectedMonth, todayDate, dates, fromDate, toDate }) }
+        { generateDatePicker({ selectedRoom, selectedMonth, todayDate, dates, fromDate, toDate }) }
       </DatePicker>
     </Container>
   )

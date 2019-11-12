@@ -7,14 +7,20 @@ const getTime = ({ day, month, year }) => {
   return new Date(year, month, day).getTime();
 }
 
+const getDate = ({ day, month, year }) => {
+  return new Date(year, month, day).toLocaleString();
+}
+
 const renderRoom = (room, onRoomHandler, fromDate, toDate, index) => {
-  const isBooked = room.booked.reduce( (acc, current) => {
-    const { checkin, checkout } = current;
-    const booked = getTime(checkin) >= fromDate && toDate <= getTime(checkout);
-    acc = [...acc, booked];
-    return acc;
-  }, []);
-  console.log(isBooked)
+
+  let isBooked = false;
+  room.booked.forEach(({ checkin, checkout }) => {
+    if(!isBooked) {
+      isBooked = toDate.day >= checkin.day && fromDate.day <= checkout.day;
+    }
+  });
+
+  console.log('isBooked', isBooked)
   return (
     <Room
       isBooked={ isBooked }
@@ -27,7 +33,7 @@ const renderRoom = (room, onRoomHandler, fromDate, toDate, index) => {
 
 const RoomItems = ({ rooms, onRoomHandler, fromDate, toDate }) => {
   const roomItems = rooms.map( (room, index) => 
-    renderRoom(room, onRoomHandler, getTime(fromDate), getTime(toDate), index)
+    renderRoom(room, onRoomHandler, fromDate, toDate, index)
   );
   return (
     <Container>

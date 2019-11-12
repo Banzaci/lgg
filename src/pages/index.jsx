@@ -18,25 +18,25 @@ const rooms = [
     booked: [
       {
         checkin: {
-          day: 2,
+          day: 14,
           month: 11,
           year: 2019
         },
         checkout: {
-          day: 8,
+          day: 18,
           month: 11,
           year: 2019
         },
       },
       {
         checkin: {
-          day: 11,
-          month: 11,
+          day: 10,
+          month: 12,
           year: 2019
         },
         checkout: {
-          day: 14,
-          month: 11,
+          day: 18,
+          month: 12,
           year: 2019
         },
       }
@@ -54,6 +54,7 @@ const initialState = {
   dp1: 0,
   dp2: 0,
   todayDate,
+  selectedRoom: rooms[0],
   selectedMonth: { ...todayDate },
   fromDate: { ...todayDate },
   toDate: { ...todayDate, day: todayDate.day + 1 },
@@ -91,6 +92,7 @@ const IndexPage = () => {
           onMonthChange={ payload => dispatch({ type: 'onMonthChange', payload }) }
           fromDate={ state.fromDate }
           toDate={ state.toDate }
+          selectedRoom={ state.selectedRoom }
         />
       </Row>
       <Row>
