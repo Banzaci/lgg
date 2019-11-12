@@ -1,8 +1,16 @@
 import styled from 'styled-components';
 
-function setBackground(prop) {
-  if(prop.isBooked) return 'yellow';
-  return '#333';
+function setBackgroundProps(prop) {
+  if(prop.isBooked) {
+    return {
+      background: '#DDD',
+      color: '#CCC',
+    };
+  }
+  return {
+    background: 'white',
+    color: 'blue',
+  };
 }
 
 export const Container = styled.div`
@@ -13,10 +21,13 @@ export const Container = styled.div`
 export const Room = styled.div`
   display: flex;
   width: 100%;
-  background: ${setBackground};
+  flex-direction: column;
+  padding: 12px;
+  ${setBackgroundProps};
 `;
 
 export const Header = styled.h1``;
 export const Price = styled.span``;
 export const Paragraph = styled.p``;
 export const Image = styled.div``;
+export const Button = styled.button``;

@@ -2,28 +2,28 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Container } from './style';
 import Room from './room';
-
-const getTime = ({ day, month, year }) => {
-  return new Date(year, month, day).getTime();
-}
-
-const getDate = ({ day, month, year }) => {
-  return new Date(year, month, day).toLocaleString();
-}
+import { getTime, getDateISO } from '../../utils/dates';
 
 const renderRoom = (room, onRoomHandler, fromDate, toDate, index) => {
-
-  let isBooked = false;
+  let booked = {
+    isBooked: false
+  };
   room.booked.forEach(({ checkin, checkout }) => {
-    if(!isBooked) {
-      isBooked = toDate.day >= checkin.day && fromDate.day <= checkout.day;
+    if(!booked.isBooked) {
+      const isBooked = getTime(toDate) >= getTime(checkin) && getTime(fromDate) <= getTime(checkout);
+      booked = {
+        ...(isBooked && {
+          checkin: getDateISO(checkin),
+          checkout: getDateISO(checkout)
+        }),
+        isBooked
+      };
     }
   });
 
-  console.log('isBooked', isBooked)
   return (
     <Room
-      isBooked={ isBooked }
+      booked={ booked }
       key={ index }
       room={ room }
       onRoomHandler={ onRoomHandler }
@@ -32,7 +32,7 @@ const renderRoom = (room, onRoomHandler, fromDate, toDate, index) => {
 }
 
 const RoomItems = ({ rooms, onRoomHandler, fromDate, toDate }) => {
-  const roomItems = rooms.map( (room, index) => 
+  const roomItems = rooms.map((room, index) => 
     renderRoom(room, onRoomHandler, fromDate, toDate, index)
   );
   return (

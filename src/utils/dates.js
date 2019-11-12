@@ -109,7 +109,6 @@ export const isSameMonth = (date, basedate = new Date()) => {
   const dateYear = date.getFullYear();
 
   return (+basedateMonth === +dateMonth) && (+basedateYear === +dateYear);
-  
 }
 
 export const isSameDay = (date, basedate = new Date()) => {
@@ -125,13 +124,10 @@ export const isSameDay = (date, basedate = new Date()) => {
   const dateYear = date.getFullYear();
 
   return (+basedateDate === +dateDate) && (+basedateMonth === +dateMonth) && (+basedateYear === +dateYear);
-  
 }
 
-export const getDateISO = (date = new Date) => {
-  
-  if (!isDate(date)) return null;
-
+export const getDateISO = ({ year, month, day }) => { 
+  const date = new Date(year, month, day);
   return [
     date.getFullYear(),
     zeroPad(+date.getMonth() + 1, 2),
@@ -139,6 +135,16 @@ export const getDateISO = (date = new Date) => {
   ].join('-');
   
 }
+
+export const daysBetween = (from, to) => {
+  const ONE_DAY = 1000 * 60 * 60 * 24;
+  console.log(from, to)
+  const differenceMs = Math.abs(getTime(from) - getTime(to));
+  return Math.round(differenceMs / ONE_DAY);
+}
+
+export const getDate = ({ day, month, year }) => new Date(year, month, day)
+export const getTime = ({ day, month, year }) => new Date(year, month, day).getTime()
 
 export const getMonthName = ({ month }) => {
   return CALENDAR_MONTHS[month-1];

@@ -18,7 +18,7 @@ const rooms = [
     booked: [
       {
         checkin: {
-          day: 14,
+          day: 11,
           month: 11,
           year: 2019
         },
@@ -54,7 +54,7 @@ const initialState = {
   dp1: 0,
   dp2: 0,
   todayDate,
-  selectedRoom: rooms[0],
+  selectedRoom: {},
   selectedMonth: { ...todayDate },
   fromDate: { ...todayDate },
   toDate: { ...todayDate, day: todayDate.day + 1 },
@@ -72,6 +72,11 @@ function reducer(state, { type, payload }) {
       return {
         ...state,
         selectedMonth: payload
+      }
+    case 'onRoomChange':
+      return {
+        ...state,
+        selectedRoom: payload
       }
     default:
       throw new Error();
@@ -100,7 +105,7 @@ const IndexPage = () => {
           fromDate={ state.fromDate }
           toDate={ state.toDate }
           rooms={ rooms }
-          onRoomHandler={ () => {} }
+          onRoomHandler={ room => dispatch({ type: 'onRoomChange', payload: room }) }
         />
       </Row>
     </Layout>
