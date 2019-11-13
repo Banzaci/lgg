@@ -13,11 +13,6 @@ function setBackgroundProps(prop) {
   };
 }
 
-export const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-`;
-
 export const Room = styled.div`
   display: flex;
   width: 100%;
@@ -26,8 +21,5 @@ export const Room = styled.div`
   ${setBackgroundProps};
 `;
 
-export const Header = styled.h1``;
 export const Price = styled.span``;
-export const Paragraph = styled.p``;
 export const Image = styled.div``;
-export const Button = styled.button``;

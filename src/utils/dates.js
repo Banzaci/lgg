@@ -149,6 +149,12 @@ export const getMonthName = ({ month }) => {
   return CALENDAR_MONTHS[month-1];
 }
 
+export const todayDate = {
+  day: THIS_DAY,
+  month: THIS_MONTH,
+  year: THIS_YEAR
+}
+
 // https://medium.com/@nitinpatel_20236/challenge-of-building-a-calendar-with-pure-javascript-a86f1303267d
 
 // https://www.cssscript.com/create-simple-event-calendar-javascript-caleandar-js/

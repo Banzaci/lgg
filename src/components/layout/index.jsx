@@ -8,7 +8,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Navigation from '../navigation';
-import { Container, Main, GlobalStyle } from './style';
+import { Container } from '../../styles/common';
+import { Main, GlobalStyle } from './style';
 
 const Layout = ({ children }) => {
   return (

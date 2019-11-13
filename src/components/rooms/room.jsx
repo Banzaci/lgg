@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Room, Header, Paragraph, Button } from './style';
+import { Room } from './style';
+import { Paragraph, Button, Header } from '../../styles/common';
 
 const RoomItem = ({ room, onRoomHandler, booked }) => (
   <Room isBooked={ booked.isBooked }>

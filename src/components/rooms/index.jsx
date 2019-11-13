@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Container } from './style';
+import { Container } from '../../styles/common';
 import Room from './room';
 import { getTime, getDateISO } from '../../utils/dates';
 

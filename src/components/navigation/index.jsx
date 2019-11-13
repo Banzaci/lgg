@@ -1,5 +1,6 @@
 import React from 'react';
-import { Nav, Container } from './style';
+import { Nav } from './style';
+import { Container } from '../../styles/common';
 
 const Navigation = () => (
   <Container>

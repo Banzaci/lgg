@@ -1,8 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { generateDatePicker } from './dp';
-import { Container, Button, Month, Weekday, Weekdays, DatePicker, MonthName } from './style';
-import { WEEK_DAYS, getNextMonth, getPreviousMonth, getMonthName, getTime, daysBetween } from '../../utils/dates';
+import { Container, Button } from '../../styles/common';
+import { Month, Weekday, Weekdays, DatePicker, MonthName } from './style';
+import { WEEK_DAYS, getNextMonth, getPreviousMonth, getMonthName, daysBetween } from '../../utils/dates';
 
 function renderWeekDay(dayName, index) {
   return <Weekday key={ index }>{ dayName }</Weekday>
