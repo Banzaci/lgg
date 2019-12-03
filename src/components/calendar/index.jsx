@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { generateDatePicker } from './dp';
-import { Container, Button } from '../../styles/common';
-import { Month, Weekday, Weekdays, DatePicker, MonthName } from './style';
+import { Button } from '../../styles/common';
+import { Month, Weekday, Weekdays, DatePicker, MonthName, Container } from './style';
 import { WEEK_DAYS, getNextMonth, getPreviousMonth, getMonthName, daysBetween } from '../../utils/dates';
 
 function renderWeekDay(dayName, index) {
@@ -23,13 +23,13 @@ function setFromAndToDate(fromDate, toDate, selectedDate) {
   }
 }
 
-const Calendar = ({ selectedRoom, selectedMonth, onMonthChange, todayDate, dates, onDateChange, isActive, fromDate, toDate }) => {
+const Calendar = ({ selectedRoom, selectedMonth, onMonthChange, todayDate, dates, onDateChange, fromDate, toDate }) => {
   const onChange = (e) => {
     const day = Number(e.target.dataset.day);
     const month = Number(e.target.dataset.month);
     const year = Number(e.target.dataset.year);
     const isBooked = JSON.parse(e.target.dataset.booked);
-    if (!isBooked && (day >= todayDate.day) && (month >= todayDate.month)) {
+    if (!isBooked && (day >= todayDate.day) || (month >= todayDate.month)) {
       const range = setFromAndToDate(fromDate, toDate, { day, month, year });
       const days = daysBetween(range);
       onDateChange({ ...range, days });
@@ -40,7 +40,7 @@ const Calendar = ({ selectedRoom, selectedMonth, onMonthChange, todayDate, dates
   const onNextMonth = () => onMonthChange({ ...selectedMonth, ...getNextMonth(selectedMonth)})
 
   return (
-    <Container isActive={ isActive }>
+    <Container>
       <Month>
         <Button onClick={ () => onPrevMonth() }>Prev</Button>
         <MonthName>{ `${getMonthName(selectedMonth)} ${selectedMonth.year}` }</MonthName>
@@ -62,7 +62,4 @@ Calendar.propTypes = {
   onDateChange: PropTypes.func.isRequired,
 }
 
-export default Calendar
-
-// https://dev.to/abdulbasit313/an-easy-way-to-create-a-customize-dynamic-table-in-react-js-3igg
-// https://blog.logrocket.com/react-datepicker-217b4aa840da/
+export default Calendar;

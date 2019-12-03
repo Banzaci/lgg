@@ -8,20 +8,12 @@ export const Main = styled.main`
   flex-direction: column;
 `;
 
-export const Container = styled.div`
-  display: flex;
-  margin: 0 auto;
-  padding: 10px;
-  width: 100%;
-  max-width: 1200px;
-  flex-direction: column;
-  background: #eee;
-`;
-
 export const GlobalStyle = createGlobalStyle`
   body {
     padding: 0;
     margin: 0;
     box-sizing: border-box;
+    font-family: arial;
+    font-size: 1em;
   }
 `

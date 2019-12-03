@@ -1,15 +1,15 @@
 import React from 'react';
-import { Nav } from './style';
-import { Container } from '../../styles/common';
+import { Nav, Container } from './style';
 
 const Navigation = () => (
   <Container>
     <Nav to="/">Home</Nav>
-    <Nav to="/booking/">Booking</Nav>
+    <Nav to="/rooms/">Rooms</Nav>
     <Nav to="/food-drinks/">Food & drinks</Nav>
-    <Nav to="/surfing/">Surfing</Nav>
     <Nav to="/contact/">Contact</Nav>
+    <Nav to="/things-to-do/">Things to do</Nav>
+    <Nav to="/media/">Media</Nav>
   </Container>
 )
 
-export default Navigation
+export default Navigation;

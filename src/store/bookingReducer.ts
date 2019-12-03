@@ -1,33 +1,39 @@
-import { DATE, IDATE } from './types';
+import { BOOKING, IBOOKING } from './types';
 import { todayDate } from '../utils/dates';
 
-export const initialState: IDATE = {
-  todayDate,
+export const initialState: IBOOKING = {
   selectedRoom: {},
+  rooms: [],
+  todayDate,
   selectedMonth: todayDate,
   fromDate: todayDate,
   toDate: { ...todayDate, day: todayDate.day + 1 },
 };
 
-export function reducer(state = initialState, action: any) {
+export function bookingReducer(state = initialState, action: any) {
   switch (action.type) {
-    case DATE.ON_DATE_CHANGE:
+    case BOOKING.ON_DATE_CHANGE:
       return {
         ...state,
         fromDate: action.payload.fromDate,
         toDate: action.payload.toDate,
       }
-    case DATE.ON_MONTH_CHANGE:
+    case BOOKING.ON_MONTH_CHANGE:
       return {
         ...state,
         selectedMonth: action.payload
       }
-    case DATE.ON_ROOM_CHANGE:
+    case BOOKING.ON_ROOM_CHANGE:
       return {
         ...state,
         selectedRoom: action.payload
       }
+    case BOOKING.ON_GET_ROOMS:
+      return {
+        ...state,
+        rooms: action.payload
+      }
     default:
-      throw new Error();
+      return state
   }
 }

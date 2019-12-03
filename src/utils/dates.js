@@ -16,11 +16,11 @@ export const CALENDAR_MONTHS = [
 export const WEEK_DAYS = {
   Sun: 'Sun',
   Mon: 'Mon',
-  Tues: 'Tue',
-  Wednes: 'Wed',
-  Thurs: 'Thu',
+  Tue: 'Tue',
+  Wed: 'Wed',
+  Thu: 'Thu',
   Fri: 'Fri',
-  Satur: 'Sat'
+  Sat: 'Sat'
 }
 
 export const CALENDAR_WEEKS = 6;

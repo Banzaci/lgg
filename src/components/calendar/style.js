@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { Container as Main } from '../../styles/common';
 
 function setBackground(prop) {
   if(prop.isBooked) return 'yellow';
@@ -9,10 +10,10 @@ function setBackground(prop) {
   return '#333';
 }
 
-export const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  box-shadow: ${({ isActive }) => isActive ? '1px 1px 1px rgba(0,0,0 .6)' : '0 rgba(0,0,0 0)'};
+//text-decoration: line-through;
+
+export const Container = styled(Main)`
+  align-items: center;
 `;
 
 export const Weekdays = styled.div`
